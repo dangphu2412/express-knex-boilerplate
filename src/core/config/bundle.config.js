@@ -1,11 +1,13 @@
 // @ts-check
-import * as express from 'express';
-import methodOverride from 'method-override';
+import { InvalidFilter, InvalidResolver } from 'core/common/exceptions/system';
 import cors from 'cors';
-import swaggerUi from 'swagger-ui-express';
-import { InvalidResolver, InvalidFilter } from 'core/common/exceptions/system';
-import { ConfigService } from 'packages/config/config.service';
+import debug from 'debug';
+import * as express from 'express';
+import http from 'http';
+import methodOverride from 'method-override';
 import { LoggerFactory } from 'packages/logger/factory/logger.factory';
+import { ArrayUtils } from 'packages/utils/array.util';
+import swaggerUi from 'swagger-ui-express';
 
 /**
  * @typedef Filter
@@ -13,13 +15,27 @@ import { LoggerFactory } from 'packages/logger/factory/logger.factory';
  */
 
 export class AppBundle {
-    BASE_PATH = '/api';
+    prefixPath = '/api';
 
-    BASE_PATH_SWAGGER = '/docs';
+    swaggerPath = '/docs';
 
-    static builder() {
+    corsOrigins = '*';
+
+    constructor() {
         LoggerFactory.globalLogger.info('App is starting bundling');
-        return new AppBundle();
+    }
+
+    setGlobalPrefix(path) {
+        this.prefixPath = path;
+        return this;
+    }
+
+    setCorsOrigins(origins) {
+        if (ArrayUtils.isEmpty(origins)) {
+            throw new Error('Cors origins should be an array of string');
+        }
+        this.corsOrigins = origins;
+        return this;
     }
 
     /**
@@ -34,7 +50,7 @@ export class AppBundle {
         if (!resolver['resolve']) {
             throw new InvalidResolver(resolver);
         }
-        this.app.use(this.BASE_PATH, resolver.resolve());
+        this.app.use(this.prefixPath, resolver.resolve());
         return this;
     }
 
@@ -55,27 +71,25 @@ export class AppBundle {
     }
 
     applySwagger(swaggerBuilder) {
-        // if (NODE_ENV !== 'production') {
         this.app.use(
-            this.BASE_PATH_SWAGGER,
+            this.swaggerPath,
             swaggerUi.serve,
             swaggerUi.setup(swaggerBuilder.instance)
         );
         LoggerFactory.globalLogger.info('Building swagger');
-        // }
         return this;
     }
 
     /**
      * Default config
      */
-    init() {
-        LoggerFactory.globalLogger.info(`Application is in mode [${ConfigService.get('NODE_ENV')}]`);
+    build() {
         /**
          * Setup basic express
          */
+        LoggerFactory.globalLogger.info(`Allow origins: ${this.corsOrigins.toString()}`);
         this.app.use(cors({
-            origin: ConfigService.get('CORS_ALLOW'),
+            origin: this.corsOrigins,
             optionsSuccessStatus: 200
         }));
         this.app.use(express.json());
@@ -97,15 +111,48 @@ export class AppBundle {
                 return undefined;
             }),
         );
-        LoggerFactory.globalLogger.info('Building initial config');
-
         return this;
     }
 
-    /*
-    Setup asynchronous config here
-     */
-    async run() {
-        LoggerFactory.globalLogger.info('Building asynchronous config');
+    async run(port) {
+        const server = http.createServer(this.app);
+        server.listen(port, () => {
+            LoggerFactory.globalLogger.info(`Server is listening on ${port}`);
+        });
+
+        server.on('error', error => {
+            // @ts-ignore
+            if (error.syscall !== 'listen') {
+                throw error;
+            }
+
+            const bind = typeof port === 'string'
+                ? `Pipe ${port}`
+                : `Port ${port}`;
+
+            // handle specific listen errors with friendly messages
+            // @ts-ignore
+            switch (error.code) {
+                case 'EACCES':
+                    LoggerFactory.globalLogger.error(`${bind} requires elevated privileges`);
+                    process.exit(1);
+                    break;
+                case 'EADDRINUSE':
+                    LoggerFactory.globalLogger.error(`${bind} is already in use`);
+                    process.exit(1);
+                    break;
+                default:
+                    throw error;
+            }
+        });
+
+        server.on('listening', () => {
+            const debugHelper = debug('node:server');
+            const addr = server.address();
+            const bind = typeof addr === 'string'
+                ? `pipe ${addr}`
+                : `port ${addr.port}`;
+            debugHelper(`Listening on ${bind}`);
+        });
     }
 }

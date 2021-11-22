@@ -5,16 +5,17 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint --fix --ext .js .",
-    "dev": "nodemon --exec babel-node src/core/bin/www.js",
-    "start": "node ./dist/core/bin/www.js",
+    "dev": "nodemon --exec babel-node src/core/index",
+    "start": "node ./dist/core/index",
     "clean": "rm -rf dist && mkdir dist",
     "build:babel": "babel ./src --out-dir dist --copy-files",
     "build": "npm run clean && npm run build:babel",
-    "create:table": "node_modules/.bin/knex migrate:make",
-    "migrate:latest": "node_modules/.bin/knex migrate:latest",
-    "migrate:rollback": "node_modules/.bin/knex migrate:rollback",
+    "migrate:create": "node_modules/.bin/knex migrate:make",
+    "seed:create": "node_modules/.bin/knex seed:make",
+    "migrate:latest": "babel-node node_modules/knex/bin/cli.js migrate:latest",
+    "migrate:rollback": "babel-node node_modules/knex/bin/cli.js migrate:rollback",
+    "seed:run": "babel-node node_modules/knex/bin/cli.js seed:run",
     "migrate:reset": "yarn run migrate:rollback && yarn run migrate:latest && yarn run seed:run",
-    "seed:run": "node_modules/.bin/knex seed:run",
     "data:prepare": "npm run build && npm run rollback && npm run migrate && npm run seed"
   },
   "repository": {
