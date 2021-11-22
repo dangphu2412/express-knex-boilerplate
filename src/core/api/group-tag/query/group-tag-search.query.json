@@ -1,8 +1,0 @@
-{
-    "main": "_id name",
-    "locks": {
-        "filters": [],
-        "sorts": []
-    },
-    "searchCriteria": ["name"]
-}

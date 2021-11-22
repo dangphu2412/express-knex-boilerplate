@@ -6,9 +6,6 @@ import swaggerUi from 'swagger-ui-express';
 import { InvalidResolver, InvalidFilter } from 'core/common/exceptions/system';
 import { ConfigService } from 'packages/config/config.service';
 import { LoggerFactory } from 'packages/logger/factory/logger.factory';
-import { UserModel } from 'core/modules/user/model/user.model';
-import { queueRegister } from './queue.config';
-import { DatabaseInstance } from './database.config';
 
 /**
  * @typedef Filter
@@ -110,8 +107,5 @@ export class AppBundle {
      */
     async run() {
         LoggerFactory.globalLogger.info('Building asynchronous config');
-        await queueRegister.publish();
-        await DatabaseInstance.connect();
-        await UserModel.createIndexes();
     }
 }
