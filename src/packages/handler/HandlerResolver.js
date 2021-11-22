@@ -16,7 +16,7 @@ export class HandlerResolver {
      *
      * @param {[import('./Module').Module]} modules
      */
-    addModule(modules) {
+    addModules(...modules) {
         modules.forEach(module => {
             module.build(this.#globalRouter);
             module.buildSwagger(this.#swagger);
