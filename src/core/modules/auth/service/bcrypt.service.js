@@ -1,5 +1,5 @@
 // @ts-check
-import { compareSync, hashSync, genSaltSync } from 'bcrypt';
+import { compare, hash, genSalt } from 'bcrypt';
 import { LoggerFactory } from 'packages/logger/factory';
 import { ConfigService } from 'packages/config/config.service';
 import { UnAuthorizedException } from 'packages/httpException';
@@ -19,19 +19,19 @@ class BcryptServiceImpl {
      * @param {string} hashed hashed string
      */
     compare(str, hashed) {
-        return compareSync(str, hashed);
+        return compare(str, hashed);
     }
 
     /**
      * @param {string} str to be hashed
      */
-    hash(str) {
-        const salt = genSaltSync(this.saltRounds);
-        return hashSync(str, salt);
+    async hash(str) {
+        const salt = await genSalt(this.saltRounds);
+        return hash(str, salt);
     }
 
-    verifyComparison(str, hashed, msg = BcryptServiceImpl.DEFAULT_MSG_INCOMPATIBLE_PWD) {
-        if (!this.compare(str, hashed)) {
+    async verifyComparison(str, hashed, msg = BcryptServiceImpl.DEFAULT_MSG_INCOMPATIBLE_PWD) {
+        if (!await this.compare(str, hashed)) {
             throw new UnAuthorizedException(msg);
         }
     }
