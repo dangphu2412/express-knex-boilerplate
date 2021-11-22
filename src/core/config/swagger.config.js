@@ -15,7 +15,7 @@ const options = {
     },
     servers: [
         {
-            url: `${ConfigService.getSingleton().get('HOST')}/api`,
+            url: `${ConfigService.get('HOST')}/api`,
             description: 'Local server',
             variables: {
                 env: {
@@ -28,7 +28,7 @@ const options = {
                         '5000',
                         '443',
                     ],
-                    default: ConfigService.getSingleton().get('PORT'),
+                    default: ConfigService.get('PORT'),
                 },
                 basePath: {
                     default: 'api',

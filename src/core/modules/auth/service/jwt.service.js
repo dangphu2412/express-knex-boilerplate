@@ -3,9 +3,9 @@ import { sign, decode } from 'jsonwebtoken';
 import { ConfigService } from 'packages/config/config.service';
 
 class JwtServiceImpl {
-    secret = ConfigService.getSingleton().get('JWT_SECRET');
+    secret = ConfigService.get('JWT_SECRET');
 
-    expiresIn = ConfigService.getSingleton().get('EXPIRE_DAYS');
+    expiresIn = ConfigService.get('EXPIRE_DAYS');
 
     constructor() {
         LoggerFactory.globalLogger.info('[JwtService] is bundling');

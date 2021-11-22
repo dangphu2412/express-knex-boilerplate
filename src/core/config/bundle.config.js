@@ -70,12 +70,12 @@ export class AppBundle {
      * Default config
      */
     init() {
-        LoggerFactory.globalLogger.info(`Application is in mode [${ConfigService.getSingleton().get('NODE_ENV')}]`);
+        LoggerFactory.globalLogger.info(`Application is in mode [${ConfigService.get('NODE_ENV')}]`);
         /**
          * Setup basic express
          */
         this.app.use(cors({
-            origin: ConfigService.getSingleton().get('CORS_ALLOW'),
+            origin: ConfigService.get('CORS_ALLOW'),
             optionsSuccessStatus: 200
         }));
         this.app.use(express.json());

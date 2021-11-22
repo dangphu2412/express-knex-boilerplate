@@ -35,7 +35,7 @@ function normalizePort(val) {
  * Get port from environment and store in Express.
  */
 
-const port = normalizePort(ConfigService.getSingleton().get('PORT'));
+const port = normalizePort(ConfigService.getOptional('PORT') || 3000);
 app.set('port', port);
 
 /**

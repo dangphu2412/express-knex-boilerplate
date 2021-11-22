@@ -10,7 +10,7 @@ class BcryptServiceImpl {
     saltRounds;
 
     constructor() {
-        this.saltRounds = Number.parseInt(ConfigService.getSingleton().get('SALT_ROUNDS'), 10);
+        this.saltRounds = ConfigService.getInt('SALT_ROUNDS');
         LoggerFactory.globalLogger.info(`[${BcryptServiceImpl.name}] is bundling`);
     }
 
