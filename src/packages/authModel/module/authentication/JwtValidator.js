@@ -7,17 +7,12 @@ export class JwtValidator {
 
     #payload;
 
-    static builder() {
-        return new JwtValidator();
-    }
-
-    applyToken(accessToken) {
-        if (accessToken) {
-            this.#accessToken = accessToken.startsWith(AUTH_CONTEXT.PREFIX_HEADER)
-                ? accessToken.slice(7)
-                : accessToken;
+    constructor(token) {
+        if (token) {
+            this.#accessToken = token.startsWith(AUTH_CONTEXT.PREFIX_HEADER)
+                ? token.slice(7)
+                : token;
         }
-        return this;
     }
 
     validate() {

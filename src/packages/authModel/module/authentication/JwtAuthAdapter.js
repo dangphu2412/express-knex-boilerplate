@@ -6,13 +6,7 @@ import { UserDetail } from '../user/UserDetail';
 export class JwtAuthAdapter {
     static USER_DETAIL_CLASS = UserDetail;
 
-    #token;
-
     #userDetail;
-
-    static builder() {
-        return new JwtAuthAdapter();
-    }
 
     static applyCustomUserDetail(customUserDetailClass) {
         if (customUserDetailClass instanceof UserDetail) {
@@ -33,18 +27,13 @@ export class JwtAuthAdapter {
         this.#userDetail.toPermissions();
     }
 
-    collectRequest(req) {
-        this.#token = req.headers[AUTH_CONTEXT.AUTHORIZATION_HEADER];
-        return this;
-    }
-
-    transfer(req) {
-        if (this.#token) {
-            const body = JwtValidator
-                .builder()
-                .applyToken(this.#token)
+    adapt(req) {
+        const token = req.headers[AUTH_CONTEXT.AUTHORIZATION_HEADER];
+        if (token) {
+            const body = new JwtValidator(token)
                 .validate()
                 .getPayload();
+
             this.#userDetail = new JwtAuthAdapter.USER_DETAIL_CLASS(body);
             this.#applyPreAuthorizationToUserDetail();
             this.#attachAuthContextToReq(req);
