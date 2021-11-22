@@ -7,7 +7,7 @@ class AuthServiceImpl {
     constructor() {
         this.bcryptService = BcryptService;
         this.jwtService = JwtService;
-        LoggerFactory.globalLogger.info(`[${AuthServiceImpl.name}] is bundling`);
+        LoggerFactory.log.info(`[${AuthServiceImpl.name}] is bundling`);
     }
 
     #getUserInfo = user => pick(user, ['_id', 'email', 'profile', 'roles', 'avatar', 'status', 'isPasswordChanged']);

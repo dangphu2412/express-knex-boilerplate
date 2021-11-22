@@ -3,7 +3,7 @@ import { SortDirection } from '../../enum';
 
 export class SortFactory {
     constructor() {
-        LoggerFactory.globalLogger.info(`[${SortFactory.name}] is building`);
+        LoggerFactory.log.info(`[${SortFactory.name}] is building`);
     }
 
     produce(req) {

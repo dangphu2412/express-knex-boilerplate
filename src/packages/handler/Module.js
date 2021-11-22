@@ -102,8 +102,8 @@ export class Module {
                 return new InValidHttpResponse(err.status, err.code, err.message)
                     .toResponse(response);
             }
-            LoggerFactory.globalLogger.error(err.message);
-            LoggerFactory.globalLogger.error(err.stack);
+            LoggerFactory.log.error(err.message);
+            LoggerFactory.log.error(err.stack);
             return InValidHttpResponse
                 .toInternalResponse(err.message)
                 .toResponse(response);
@@ -164,7 +164,7 @@ export class Module {
     } apis
      */
     register(apis) {
-        LoggerFactory.globalLogger.info(`[${this.#prefix.module}] is bundling`);
+        LoggerFactory.log.info(`[${this.#prefix.module}] is bundling`);
 
         apis.forEach(api => {
             const {
@@ -192,7 +192,7 @@ export class Module {
 
             this.#router[method](route, ...middlewares, this.#createHandler(controller));
 
-            LoggerFactory.globalLogger.info(`[${this.#prefix.module}] ${method.toUpperCase()} ${this.#prefix.prefixPath}${route} mapped ${controller.name}`);
+            LoggerFactory.log.info(`[${this.#prefix.module}] ${method.toUpperCase()} ${this.#prefix.prefixPath}${route} mapped ${controller.name}`);
 
             this.#addSwaggerContent(api);
         });

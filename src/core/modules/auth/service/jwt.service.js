@@ -8,7 +8,7 @@ class JwtServiceImpl {
     expiresIn = ConfigService.get('EXPIRE_DAYS');
 
     constructor() {
-        LoggerFactory.globalLogger.info('[JwtService] is bundling');
+        LoggerFactory.log.info('[JwtService] is bundling');
     }
 
     sign(payload) {

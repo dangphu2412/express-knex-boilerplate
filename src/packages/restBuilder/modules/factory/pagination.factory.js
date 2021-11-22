@@ -13,7 +13,7 @@ export class PaginationFactory {
     static DEFAULT_SIZE = null;
 
     constructor() {
-        LoggerFactory.globalLogger.info(`[${PaginationFactory.name}] is building`);
+        LoggerFactory.log.info(`[${PaginationFactory.name}] is building`);
     }
 
     produce({ page, size }) {

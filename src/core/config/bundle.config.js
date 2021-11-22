@@ -22,7 +22,7 @@ export class AppBundle {
     corsOrigins = '*';
 
     constructor() {
-        LoggerFactory.globalLogger.info('App is starting bundling');
+        LoggerFactory.log.info('App is starting bundling');
     }
 
     setGlobalPrefix(path) {
@@ -76,7 +76,7 @@ export class AppBundle {
             swaggerUi.serve,
             swaggerUi.setup(swaggerBuilder.instance)
         );
-        LoggerFactory.globalLogger.info('Building swagger');
+        LoggerFactory.log.info('Building swagger');
         return this;
     }
 
@@ -87,7 +87,7 @@ export class AppBundle {
         /**
          * Setup basic express
          */
-        LoggerFactory.globalLogger.info(`Allow origins: ${this.corsOrigins.toString()}`);
+        LoggerFactory.log.info(`Allow origins: ${this.corsOrigins.toString()}`);
         this.app.use(cors({
             origin: this.corsOrigins,
             optionsSuccessStatus: 200
@@ -117,7 +117,7 @@ export class AppBundle {
     async run(port) {
         const server = http.createServer(this.app);
         server.listen(port, () => {
-            LoggerFactory.globalLogger.info(`Server is listening on ${port}`);
+            LoggerFactory.log.info(`Server is listening on ${port}`);
         });
 
         server.on('error', error => {
@@ -134,11 +134,11 @@ export class AppBundle {
             // @ts-ignore
             switch (error.code) {
                 case 'EACCES':
-                    LoggerFactory.globalLogger.error(`${bind} requires elevated privileges`);
+                    LoggerFactory.log.error(`${bind} requires elevated privileges`);
                     process.exit(1);
                     break;
                 case 'EADDRINUSE':
-                    LoggerFactory.globalLogger.error(`${bind} is already in use`);
+                    LoggerFactory.log.error(`${bind} is already in use`);
                     process.exit(1);
                     break;
                 default:

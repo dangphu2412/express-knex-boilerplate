@@ -11,7 +11,7 @@ class BcryptServiceImpl {
 
     constructor() {
         this.saltRounds = ConfigService.getInt('SALT_ROUNDS');
-        LoggerFactory.globalLogger.info(`[${BcryptServiceImpl.name}] is bundling`);
+        LoggerFactory.log.info(`[${BcryptServiceImpl.name}] is bundling`);
     }
 
     /**

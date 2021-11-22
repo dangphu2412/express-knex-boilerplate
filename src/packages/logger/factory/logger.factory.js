@@ -5,7 +5,7 @@ import { TransportFactory } from './transport.factory';
 import { FileOutputFormat } from '../format/file.format';
 
 export class LoggerFactory {
-    static globalLogger = LoggerFactory.create();
+    static log = LoggerFactory.create();
 
     static create(name) {
         return LoggerFactory.createByTransports(

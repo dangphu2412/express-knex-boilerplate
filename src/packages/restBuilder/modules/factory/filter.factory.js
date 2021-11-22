@@ -6,7 +6,7 @@ export class FilterFactory {
     static filterValidator = new FilterValidator();
 
     constructor() {
-        LoggerFactory.globalLogger.info(`[${FilterFactory.name}] is building`);
+        LoggerFactory.log.info(`[${FilterFactory.name}] is building`);
     }
 
     produce({ filter }) {

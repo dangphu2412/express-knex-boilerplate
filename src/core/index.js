@@ -25,7 +25,7 @@ const app = express();
         .build()
         .run(ConfigService.get('PORT'));
 
-    LoggerFactory.globalLogger.info(`Application is in mode [${ConfigService.get('NODE_ENV')}]`);
+    LoggerFactory.log.info(`Application is in mode [${ConfigService.get('NODE_ENV')}]`);
 })();
 
 export default app;
