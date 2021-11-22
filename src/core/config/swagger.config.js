@@ -10,7 +10,7 @@ const options = {
         termsOfService: '',
         contact: {
             name: 'Backend S-group',
-            email: 'laptrinh-sgroup@gmail.com',
+            email: 'dangphu241299@gmail.com',
         },
     },
     servers: [
@@ -34,11 +34,7 @@ const options = {
                     default: 'api',
                 },
             },
-        },
-        {
-            url: 'https://app-dev.herokuapp.com/api',
-            description: 'DEV Env',
-        },
+        }
     ],
     basePath: '/api',
     auth: true,

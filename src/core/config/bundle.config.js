@@ -15,18 +15,18 @@ import swaggerUi from 'swagger-ui-express';
  */
 
 export class AppBundle {
-    prefixPath = '/api';
+    _prefixPath = '/api';
 
-    swaggerPath = '/docs';
+    _swaggerPath = '/docs';
 
-    corsOrigins = '*';
+    _corsOrigins = '*';
 
     constructor() {
         LoggerFactory.log.info('App is starting bundling');
     }
 
     setGlobalPrefix(path) {
-        this.prefixPath = path;
+        this._prefixPath = path;
         return this;
     }
 
@@ -34,7 +34,7 @@ export class AppBundle {
         if (ArrayUtils.isEmpty(origins)) {
             throw new Error('Cors origins should be an array of string');
         }
-        this.corsOrigins = origins;
+        this._corsOrigins = origins;
         return this;
     }
 
@@ -50,7 +50,7 @@ export class AppBundle {
         if (!resolver['resolve']) {
             throw new InvalidResolver(resolver);
         }
-        this.app.use(this.prefixPath, resolver.resolve());
+        this.app.use(this._prefixPath, resolver.resolve());
         return this;
     }
 
@@ -72,7 +72,7 @@ export class AppBundle {
 
     applySwagger(swaggerBuilder) {
         this.app.use(
-            this.swaggerPath,
+            this._swaggerPath,
             swaggerUi.serve,
             swaggerUi.setup(swaggerBuilder.instance)
         );
@@ -87,9 +87,9 @@ export class AppBundle {
         /**
          * Setup basic express
          */
-        LoggerFactory.log.info(`Allow origins: ${this.corsOrigins.toString()}`);
+        LoggerFactory.log.info(`Allow origins: ${this._corsOrigins.toString()}`);
         this.app.use(cors({
-            origin: this.corsOrigins,
+            origin: this._corsOrigins,
             optionsSuccessStatus: 200
         }));
         this.app.use(express.json());

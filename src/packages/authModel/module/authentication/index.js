@@ -1,2 +1,2 @@
 export * from './JwtAuthAdapter';
-export * from './JwtValidator';
+export * from './JwtExtractor';

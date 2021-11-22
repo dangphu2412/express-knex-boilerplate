@@ -1,19 +1,29 @@
 export class UserDetail {
-  payload;
+    _rulesDisposed = false;
 
-  roles;
+    payload;
 
-  permissions;
+    roles;
 
-  constructor(payload) {
-      this.payload = payload;
-  }
+    permissions;
 
-  toRoles() {
-      this.roles = this.payload?.roles ?? [];
-  }
+    constructor(payload) {
+        this.payload = payload;
+    }
 
-  toPermissions() {
-      this.permissions = this.payload?.permissions ?? [];
-  }
+    areRulesDisposed() {
+        return !!this._rulesDisposed;
+    }
+
+    disposeRules() {
+        this._rulesDisposed = true;
+    }
+
+    toRoles() {
+        this.roles = this.payload?.roles ?? [];
+    }
+
+    toPermissions() {
+        this.permissions = this.payload?.permissions ?? [];
+    }
 }

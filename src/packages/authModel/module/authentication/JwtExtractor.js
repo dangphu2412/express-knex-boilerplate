@@ -2,7 +2,7 @@ import { decode } from 'jsonwebtoken';
 import { UnAuthorizedException } from '../../../httpException';
 import { AUTH_CONTEXT } from '../../common/enum/authContext';
 
-export class JwtValidator {
+export class JwtExtractor {
     #accessToken;
 
     #payload;
@@ -10,12 +10,12 @@ export class JwtValidator {
     constructor(token) {
         if (token) {
             this.#accessToken = token.startsWith(AUTH_CONTEXT.PREFIX_HEADER)
-                ? token.slice(7)
+                ? token.slice(AUTH_CONTEXT.PREFIX_HEADER.length)
                 : token;
         }
     }
 
-    validate() {
+    extract() {
         if (this.#accessToken) {
             try {
                 this.#payload = decode(this.#accessToken);
@@ -23,10 +23,6 @@ export class JwtValidator {
                 throw new UnAuthorizedException();
             }
         }
-        return this;
-    }
-
-    getPayload() {
         return this.#payload;
     }
 }
