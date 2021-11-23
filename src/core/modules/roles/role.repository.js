@@ -1,6 +1,6 @@
 import { Model } from 'objection';
 
-export class User extends Model {
+export class RoleRepository extends Model {
     static get tableName() {
         return 'users';
     }

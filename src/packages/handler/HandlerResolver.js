@@ -8,17 +8,13 @@ export class HandlerResolver {
      */
     #swagger;
 
-    static builder() {
-        return new HandlerResolver();
-    }
-
     /**
      *
      * @param {[import('./Module').Module]} modules
      */
     addModules(...modules) {
         modules.forEach(module => {
-            module.build(this.#globalRouter);
+            module.resolve(this.#globalRouter);
             module.buildSwagger(this.#swagger);
         });
         return this;

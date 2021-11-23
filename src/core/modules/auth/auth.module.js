@@ -2,7 +2,7 @@ import { loginInterceptor } from 'core/modules/auth';
 import { Module } from 'packages/handler';
 import { AuthController } from './auth.controller';
 
-export const AuthResolver = Module.builder()
+export const AuthResolver = new Module()
     .addPrefix({
         prefixPath: '/auth',
         tag: 'auth',

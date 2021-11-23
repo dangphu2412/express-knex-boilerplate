@@ -1,1 +1,1 @@
-export * from './default-validator.interceptor';
+export * from './input.interceptor';

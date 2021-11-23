@@ -1,6 +1,6 @@
 import { AbstractInputValidatorInterceptor } from './input-validator.interceptor';
 
-export class DefaultValidatorInterceptor extends AbstractInputValidatorInterceptor {
+export class InputInterceptor extends AbstractInputValidatorInterceptor {
     /**
       * @type {import('joi').ObjectSchema<TSchema>} schema
       */

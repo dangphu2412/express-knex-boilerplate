@@ -1,5 +1,5 @@
 import { Model } from 'objection';
-import { knex } from 'knex';
+import Knex from 'knex';
 import { LoggerFactory } from 'packages/logger';
 
 export class OrmProvider {
@@ -8,8 +8,8 @@ export class OrmProvider {
     }
 
     static async setup(config) {
-        const knexInstance = knex(config);
-        Model(knexInstance);
+        const knexInstance = Knex(config);
+        Model.knex(knexInstance);
         let retryTimes = 5;
         let needRetry = true;
 

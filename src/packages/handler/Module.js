@@ -43,10 +43,6 @@ export class Module {
 
     #router = express.Router();
 
-    static builder() {
-        return new Module();
-    }
-
     static #producePreAuthorizeMiddleware = (req, res, next) => {
         if (!getUserContext(req)) {
             return next(new UnAuthorizedException());
@@ -199,7 +195,7 @@ export class Module {
         return this;
     }
 
-    build(globalRoute) {
+    resolve(globalRoute) {
         globalRoute.use(this.#prefix.prefixPath, this.#router);
     }
 

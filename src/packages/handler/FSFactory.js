@@ -33,7 +33,9 @@ export class FSFactory {
     static create() {
         const instance = new FSFactory();
         instance.app = express();
+
         LoggerFactory.log.info(`Allow origins: ${instance._corsOrigins.toString()}`);
+
         instance.app.use(cors({
             origin: instance._corsOrigins,
             optionsSuccessStatus: 200
@@ -42,8 +44,8 @@ export class FSFactory {
         instance.app.use(express.urlencoded({ extended: false }));
 
         /**
-                  * Setup method override method to use PUT, PATCH,...
-                  */
+         * Setup method override method to use PUT, PATCH,...
+         */
         instance.app.use(methodOverride('X-HTTP-Method-Override'));
         instance.app.use(
             methodOverride(req => {
@@ -84,6 +86,7 @@ export class FSFactory {
     /**
      *
      * @param {[Filter]} filters
+     * Filter will be apply follow by the priority you put in parameters
      * @returns {FSFactory}
      */
     applyGlobalFilters(filters) {
