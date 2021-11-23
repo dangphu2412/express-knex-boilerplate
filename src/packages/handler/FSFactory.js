@@ -1,5 +1,5 @@
 // @ts-check
-import { InvalidFilter, InvalidResolver } from 'core/common/exceptions/system';
+import { InvalidFilter, InvalidResolver } from 'packages/handler/exceptions/system';
 import cors from 'cors';
 import debug from 'debug';
 import express from 'express';
