@@ -1,4 +1,4 @@
-# THIS IS TEMPLATE RESTFUL API FOR MONGOOSE
+# THIS IS TEMPLATE RESTFUL API FOR KNEX WITH ORM OBJECTION
 
 ## Setup
 ### Environment
@@ -8,8 +8,8 @@
 cp .env.example ./.env
 ```
 - Config environment variables:
-    - Configure mongodb connection string (DATABASE_URL in env file).
-    - In this case: DATABASE_URL=mongodb://username:password@host:port/database?options
+    - Configure sql connection string (DATABASE_URL in env file).
+    - In this case: DATABASE_URL=postgres://{user}:{password}@{host}:{port}/{databaseName}
     - Set NODE_ENV in .env file(default is development environment)
 
 ## Start project
@@ -35,5 +35,3 @@ yarn dev
 ```bash
 yarn start
 ```
-## Packages of project
-#### [Rest Builder](src/packages/restBuilder/README.md)
