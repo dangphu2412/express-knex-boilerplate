@@ -3,7 +3,15 @@
         "experimentalDecorators": true,
         "module": "commonJS",
         "target": "es6",
-        "baseUrl": "./src"
+        "baseUrl": "./src",
+        "paths": {
+            "core/*": ["./src/core/*"],
+            "packages/*": ["./src/packages/*"],
+            "config/*": ["./src/core/config/*"],
+            "database/*": ["./src/core/database/*"],
+            "common/*": ["./src/core/common/*"],
+            "modules/*": ["./src/core/modules/*"]
+        }
     },
     "exclude": [
         "./node_modules/*"

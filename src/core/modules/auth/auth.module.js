@@ -1,6 +1,7 @@
-import { loginInterceptor } from 'core/modules/auth';
 import { Module } from 'packages/handler';
 import { AuthController } from './auth.controller';
+import { LoginInterceptor } from './interceptor/login.interceptor';
+import { RegisterInterceptor } from './interceptor/register.interceptor';
 
 export const AuthResolver = new Module()
     .addPrefix({
@@ -10,10 +11,17 @@ export const AuthResolver = new Module()
     })
     .register([
         {
-            route: '/',
+            route: '/register',
             method: 'post',
-            interceptors: [loginInterceptor],
+            interceptors: [RegisterInterceptor],
+            controller: AuthController.register,
+            body: 'RegisterDTO'
+        },
+        {
+            route: '/login',
+            method: 'post',
+            interceptors: [LoginInterceptor],
             controller: AuthController.login,
-            body: 'LoginDto'
+            body: 'LoginDTO'
         },
     ]);

@@ -25,7 +25,11 @@
       "alias": {
         "core": "./src/core",
         "src": "./src",
-        "packages": "./src/packages"
+        "packages": "./src/packages",
+        "config": "./src/core/config",
+        "database": "./src/core/database",
+        "common": "./src/core/common",
+        "modules": "./src/core/modules"
       }
     }]
   ],

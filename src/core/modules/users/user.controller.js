@@ -11,7 +11,10 @@ class Controller {
 
     createOne = async req => ValidHttpResponse.toCreatedResponse(await this.userService.createOne(req.body))
 
-    updateSelf = async req => ValidHttpResponse.toCreatedResponse(await this.userService.updateSelf(getUserContext(req), req.body))
+    updateSelf = async req => {
+        await this.userService.updateSelf(getUserContext(req), req.body);
+        return ValidHttpResponse.toNoContentResponse();
+    }
 }
 
 export const UserController = new Controller();

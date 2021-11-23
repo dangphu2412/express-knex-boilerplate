@@ -1,6 +1,7 @@
-import { LoginDto } from 'core/modules/auth';
-import { AuthService } from 'core/modules/auth/service/auth.service';
 import { ValidHttpResponse } from 'packages/handler/response';
+import { LoginDto } from './dto/login.dto';
+import { RegisterDTO } from './dto/register.dto';
+import { AuthService } from './service/auth.service';
 
 class AuthControllerImpl {
     constructor() {
@@ -9,6 +10,11 @@ class AuthControllerImpl {
 
     login = async req => {
         const data = await this.service.login(LoginDto(req.body));
+        return ValidHttpResponse.toOkResponse(data);
+    }
+
+    register = async req => {
+        const data = await this.service.register(RegisterDTO(req.body));
         return ValidHttpResponse.toOkResponse(data);
     }
 }

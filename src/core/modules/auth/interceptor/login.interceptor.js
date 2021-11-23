@@ -2,9 +2,9 @@ import { InputInterceptor } from 'core/infrastructure/interceptor/input.intercep
 import Joi from 'joi';
 import { JoiUtils } from '../../../utils';
 
-export const loginInterceptor = new InputInterceptor(
+export const LoginInterceptor = new InputInterceptor(
     Joi.object({
-        email: JoiUtils.email().required(),
+        username: JoiUtils.requiredString().required(),
         password: JoiUtils.password().required(),
     })
 );
