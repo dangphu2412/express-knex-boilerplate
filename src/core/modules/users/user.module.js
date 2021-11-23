@@ -12,5 +12,15 @@ export const UserResolver = new Module()
             route: '/',
             controller: UserController.findAll,
             method: 'get',
+        },
+        {
+            route: '/',
+            controller: UserController.createOne,
+            method: 'post',
+        },
+        {
+            route: '/',
+            controller: UserController.updateSelf,
+            method: 'patch',
         }
     ]);

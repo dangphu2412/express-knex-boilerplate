@@ -1,5 +1,6 @@
 import { Model } from 'objection';
 import { RoleRepository } from '../roles/role.repository';
+import { TaskRepository } from '../tasks/task.repository';
 
 export class UserRepository extends Model {
     static get tableName() {
@@ -17,6 +18,18 @@ export class UserRepository extends Model {
                     to: 'users_roles.roles_id'
                 },
                 to: 'roles.id'
+            }
+        },
+        tasks: {
+            relation: Model.ManyToManyRelation,
+            modelClass: TaskRepository,
+            join: {
+                from: 'tasks.id',
+                through: {
+                    from: 'users_tasks.users_id',
+                    to: 'users_tasks.tasks_id'
+                },
+                to: 'tasks.id'
             }
         }
     };
