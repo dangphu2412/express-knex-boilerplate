@@ -16,14 +16,16 @@ class AuthServiceImpl {
     async login(loginDTO) {
         const { username, password } = loginDTO;
 
-        const user = await this.userService.findByUsername(username);
+        const user = await this.userService
+            .findByUsername(username)
+            .withGraphFetched('roles');
 
         if (!user || !(await this.bcryptService.compare(password, user.password))) {
             throw new UnAuthorizedException('Your username or password is incorrect');
         }
 
         return {
-            accessToken: this.jwtService.sign({ id: user.id }),
+            accessToken: this.jwtService.sign({ id: user.id, roles: user.roles }),
             info: this._getUserInfo(user)
         };
     }
@@ -42,12 +44,15 @@ class AuthServiceImpl {
         const userAfterRegister = await this.userService.register(registerDTO);
 
         return {
-            accessToken: this.jwtService.sign({ id: userAfterRegister.id }),
+            accessToken: this.jwtService.sign({
+                id: userAfterRegister.id,
+                roles: [userAfterRegister.roles]
+            }),
             info: this._getUserInfo(userAfterRegister)
         };
     }
 
-    _getUserInfo = user => pick(user, ['id', 'email']);
+    _getUserInfo = user => pick(user, ['id', 'email', 'roles']);
 }
 
 export const AuthService = new AuthServiceImpl();

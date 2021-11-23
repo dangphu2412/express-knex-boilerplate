@@ -1,5 +1,7 @@
 import { BcryptService } from 'core/modules/auth/service/bcrypt.service';
 import { LoggerFactory } from 'packages/logger';
+import { RoleMasks } from '../roles/role.enum';
+import { RoleLoader } from '../roles/role.loader';
 import { UserAssembler } from './user.assembler';
 import { UserRepository } from './user.repository';
 
@@ -9,6 +11,7 @@ class UserServiceImpl {
         this.logger = LoggerFactory.create(UserServiceImpl.name);
         this.userRepository = UserRepository;
         this.userAssembler = UserAssembler;
+        this.roleLoader = RoleLoader;
     }
 
     findAll() {
@@ -22,10 +25,16 @@ class UserServiceImpl {
             .where('username', '=', username).first();
     }
 
-    register(registerDTO) {
-        return this.userRepository.query().insertAndFetch(
+    async register(registerDTO) {
+        const viewerRole = await this.roleLoader.getRoleByName(RoleMasks.Viewer);
+
+        const user = await this.userRepository.query().insertAndFetch(
             this.userAssembler.convertToEntity(registerDTO)
         );
+
+        await user.$relatedQuery('roles').relate(viewerRole);
+
+        return user;
     }
 }
 
