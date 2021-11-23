@@ -10,7 +10,9 @@ class UserServiceImpl {
     }
 
     findAll() {
-        return this.userRepository.query();
+        return this.userRepository.query()
+            .withGraphJoined('roles')
+            .page(0, 2);
     }
 }
 

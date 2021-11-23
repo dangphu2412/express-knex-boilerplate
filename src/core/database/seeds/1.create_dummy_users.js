@@ -3,8 +3,6 @@
 import { BcryptService } from 'core/modules/auth';
 
 export const seed = async function createDummyUsers(knex) {
-    // Deletes ALL existing entries
-    await knex('users').del();
     const hashedPwd = await BcryptService.hash('@@123456Fus');
     await knex('users').insert([
         { id: 1, username: 'fusdeptrai', password: hashedPwd },

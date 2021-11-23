@@ -28,6 +28,7 @@ export async function down(knex) {
     const tracsaction = await knex.transaction();
     try {
         await knex.schema.dropTableIfExists('users_roles');
+        await knex.schema.dropTableIfExists('roles');
         await tracsaction.commit();
     } catch (error) {
         await tracsaction.rollback();

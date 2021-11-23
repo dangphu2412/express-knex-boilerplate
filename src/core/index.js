@@ -1,3 +1,4 @@
+import './config/config-service.config';
 import { SecurityFilter } from 'packages/authModel/core/security/SecurityFilter';
 import { ConfigService } from 'packages/config';
 import { InvalidUrlFilter } from 'packages/handler/filter/InvalidUrlFilter';
@@ -5,7 +6,6 @@ import { FSFactory } from 'packages/handler/FSFactory';
 import { HttpExceptionFilter } from 'packages/httpException/HttpExceptionFilter';
 import { LoggerFactory } from 'packages/logger';
 import { OrmProvider } from 'packages/orm/config';
-import './config/config-service.config';
 import { CORS_ORIGIN } from './config/cors.config';
 import './config/restBuilder.config';
 import { ApiDocument } from './config/swagger.config';

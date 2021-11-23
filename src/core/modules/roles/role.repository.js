@@ -4,9 +4,4 @@ export class RoleRepository extends Model {
     static get tableName() {
         return 'roles';
     }
-
-    static get relationMappings() {
-        return {
-        };
-    }
 }
