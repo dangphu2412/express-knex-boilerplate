@@ -18,7 +18,7 @@ import { SearchFactory } from '../../modules/factory/search.factory';
         associates
      }
  */
-export class RequestTransformer {
+export class SearchCriteria {
     /**
      * Method to communicate with other classes
      * @type {{
@@ -61,13 +61,13 @@ export class RequestTransformer {
     constructor(requestQuery, relationSchema) {
         this.content = {};
         requestQuery.searchCriteria = relationSchema?.searchCriteria;
-        this.content.pagination = RequestTransformer.paginationFactory.produce(requestQuery);
-        this.content.filters = RequestTransformer.filterFactory.produce(requestQuery);
-        this.content.sorts = RequestTransformer.sortFactory.produce(requestQuery);
-        this.content.search = RequestTransformer.searchFactory.produce(requestQuery);
+        this.content.pagination = SearchCriteria.paginationFactory.produce(requestQuery);
+        this.content.filters = SearchCriteria.filterFactory.produce(requestQuery);
+        this.content.sorts = SearchCriteria.sortFactory.produce(requestQuery);
+        this.content.search = SearchCriteria.searchFactory.produce(requestQuery);
         this.content.main = relationSchema?.main;
         this.content.associates = relationSchema?.associates;
-        RequestTransformer.constructValidator(this.content, relationSchema?.locks);
+        SearchCriteria.constructValidator(this.content, relationSchema?.locks);
     }
 
     /**

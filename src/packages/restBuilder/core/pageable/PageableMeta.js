@@ -21,7 +21,7 @@ export class PageableMeta {
 
     /**
      * @notes This method will automatically collect page and size from requestTransform
-     * @param {import('../requestTransformer').RequestTransformer} query
+     * @param {import('../search-criteria').SearchCriteria} query
      * @returns {PageableMeta}
      */
     static builder(query, total) {

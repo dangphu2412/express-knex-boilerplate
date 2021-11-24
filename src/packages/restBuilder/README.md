@@ -99,11 +99,11 @@ interface Validator {
     validate(input): Promise<void> | void
 }
 
-getAndCount(requestTransformer: ITransformContent): [IDataResponse<T>, number]
+getAndCount(search-criteria: ITransformContent): [IDataResponse<T>, number]
 
-get(requestTransformer: ITransformContent): IDataResponse<T>
+get(search-criteria: ITransformContent): IDataResponse<T>
 
-getOne(requestTransformer: ITransformContent): T
+getOne(search-criteria: ITransformContent): T
 
 create(dto: any, uniqueCondition: {column, sign, value, err}, validator: Validator): { _id }
 ```

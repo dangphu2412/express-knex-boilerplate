@@ -5,8 +5,8 @@ import { SortQuery } from './sort.query';
 
 export class QueryExtractor {
     /**
-     * 
-     * @param {import('../../core/requestTransformer/RequestTransformer').RequestTransformer} req 
+     *
+     * @param {import('../../core/search-criteria/SearchCriteria').SearchCriteria} req
      */
     static extractToArray(req) {
         return [
@@ -20,8 +20,8 @@ export class QueryExtractor {
     }
 
     /**
-     * 
-     * @param {import('../../core/requestTransformer/RequestTransformer').RequestTransformer} req 
+     *
+     * @param {import('../../core/search-criteria/SearchCriteria').SearchCriteria} req
      */
     static extractToObject(req) {
         return {

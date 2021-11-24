@@ -14,7 +14,8 @@ class UserServiceImpl {
         this.roleLoader = RoleLoader;
     }
 
-    async findAll() {
+    // eslint-disable-next-line no-unused-vars
+    async findAll(query) {
         const users = await this.userRepository.query()
             .whereIn('users.id',
                 builder => {

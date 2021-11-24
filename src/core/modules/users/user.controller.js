@@ -7,7 +7,7 @@ class Controller {
         this.userService = UserService;
     }
 
-    findAll = async () => ValidHttpResponse.toOkResponse(await this.userService.findAll())
+    findAll = async req => ValidHttpResponse.toOkResponse(await this.userService.findAll(req.query))
 
     createOne = async req => ValidHttpResponse.toCreatedResponse(await this.userService.createOne(req.body))
 

@@ -59,7 +59,7 @@
     export const ExampleRepository = new Repository();
 
     ```
-- RequestFormation change name into RequestTransformer
+- RequestFormation change name into SearchCriteria
 
 #CHANGELOG-28/4/2021
 ## [Structure]: ☕ Improve response of success api
@@ -90,7 +90,7 @@ passing response from express params here.
 will have some specific case on status and data.
 ```javascript
     import { UserService } from '../../../modules/user/service/user.service';
-    import { RequestTransformer } from '../../../../packages/restBuilder/core/requestTransformer';
+    import { SearchCriteria } from '../../../../packages/restBuilder/core/search-criteria';
     import SearchUserSchema from '../query/searchUser.schema.json';
     import { Pageable, PageableMeta } from '../../../../packages/restBuilder/core/pageable';
     import { CreateUserDto } from '../../../modules/user/dto/createUser.dto';

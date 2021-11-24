@@ -1,3 +1,4 @@
+import { DefaultQueryCriteriaDocument } from 'core/common/swagger';
 import { Module } from 'packages/handler/Module';
 import { SpecificRoleGuard } from '../auth';
 import { RoleMasks } from '../roles/role.enum';
@@ -16,6 +17,7 @@ export const UserResolver = new Module()
             preAuthorization: true,
             guards: [new SpecificRoleGuard(RoleMasks.Admin)],
             method: 'get',
+            params: DefaultQueryCriteriaDocument
         },
         {
             route: '/',
