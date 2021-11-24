@@ -14,10 +14,19 @@ class UserServiceImpl {
         this.roleLoader = RoleLoader;
     }
 
-    findAll() {
-        return this.userRepository.query()
-            .withGraphJoined('roles')
-            .page(0, 20);
+    async findAll() {
+        const users = await this.userRepository.query()
+            .whereIn('users.id',
+                builder => {
+                    builder.select('users.id').from('users')
+                        .leftJoin('users_roles', 'users_roles.users_id', 'users.id')
+                        .leftJoin('roles', 'users_roles.roles_id', 'roles.id')
+                        .groupBy('users.id')
+                        .page(0, 2);
+                })
+            .withGraphJoined('roles');
+
+        return users;
     }
 
     findByUsername(username) {

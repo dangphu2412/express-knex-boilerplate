@@ -10,9 +10,13 @@ export const seed = async function createDummyUsers(knex) {
     try {
         const roles = await trx('roles').select();
         let adminId;
+        let viewerId;
         roles.forEach(role => {
             if (role.name === RoleMasks.Admin) {
                 adminId = role.id;
+            }
+            if (role.name === RoleMasks.Viewer) {
+                viewerId = role.id;
             }
         });
 
@@ -21,6 +25,11 @@ export const seed = async function createDummyUsers(knex) {
         await trx('users_roles').insert(users.map(user => ({
             users_id: user.id,
             roles_id: adminId
+        })));
+
+        await trx('users_roles').insert(users.map(user => ({
+            users_id: user.id,
+            roles_id: viewerId
         })));
 
         await trx.commit();
