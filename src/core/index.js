@@ -6,16 +6,17 @@ import { FSFactory } from 'packages/handler/FSFactory';
 import { HttpExceptionFilter } from 'packages/httpException/HttpExceptionFilter';
 import { LoggerFactory } from 'packages/logger';
 import { OrmProvider } from 'packages/orm/config';
+import config from '../../knexfile';
 import { CORS_ORIGIN } from './config/cors.config';
-import './config/restBuilder.config';
+import { configSearch } from './config/search.config';
 import { ApiDocument } from './config/swagger.config';
 import { ModuleResolver } from './modules';
-import config from '../../knexfile';
 
 (async () => {
     const app = FSFactory.create();
 
     OrmProvider.setup(config[ConfigService.get('NODE_ENV')]);
+    configSearch();
 
     await app
         .setGlobalPrefix('/api')

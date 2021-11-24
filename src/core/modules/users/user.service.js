@@ -1,5 +1,6 @@
 import { BcryptService } from 'core/modules/auth/service/bcrypt.service';
 import { LoggerFactory } from 'packages/logger';
+import { SearchCriteria } from 'packages/query/core/search-criteria';
 import { RoleMasks } from '../roles/role.enum';
 import { RoleLoader } from '../roles/role.loader';
 import { UserAssembler } from './user.assembler';
@@ -16,6 +17,8 @@ class UserServiceImpl {
 
     // eslint-disable-next-line no-unused-vars
     async findAll(query) {
+        const search = SearchCriteria.create(query);
+        console.log(search);
         const users = await this.userRepository.query()
             .whereIn('users.id',
                 builder => {

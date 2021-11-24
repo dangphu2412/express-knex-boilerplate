@@ -8,8 +8,8 @@ export const QueryCriteriaDocument = {
         type: 'int',
         description: desc
     }),
-    size: (desc = 'Max size: 20. Default: 10') => SwaggerDocument.ApiParams({
-        name: 'size',
+    limit: (desc = 'Max limit: 20. Default: 10') => SwaggerDocument.ApiParams({
+        name: 'limit',
         paramsIn: 'query',
         required: false,
         type: 'int',
