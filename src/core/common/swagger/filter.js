@@ -15,15 +15,15 @@ export const QueryCriteriaDocument = {
         type: 'int',
         description: desc
     }),
-    sort: desc => SwaggerDocument.ApiParams({
-        name: 'sort',
+    sorts: desc => SwaggerDocument.ApiParams({
+        name: 'sorts',
         paramsIn: 'query',
         required: false,
         type: 'array',
         description: desc
     }),
     filter: desc => SwaggerDocument.ApiParams({
-        name: 'filter',
+        name: 'filters',
         paramsIn: 'query',
         required: false,
         type: 'array',
