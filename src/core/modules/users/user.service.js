@@ -15,10 +15,17 @@ class UserServiceImpl {
         this.roleLoader = RoleLoader;
     }
 
-    // eslint-disable-next-line no-unused-vars
     async findAll(query) {
         const search = SearchCriteria.create(query);
-        console.log(search);
+        search.interceptQuery({
+            sorts: {
+                allowFields: ['fullName', 'username']
+            },
+            filters: {
+                allowFields: ['fullName']
+            }
+        });
+
         const users = await this.userRepository.query()
             .whereIn('users.id',
                 builder => {

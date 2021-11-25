@@ -1,4 +1,5 @@
 import { BadRequestException } from 'packages/httpException';
+import { ArrayUtils } from 'packages/utils/array.util';
 import { ConfigKeys, SearchConfig } from './search-config';
 
 export const FilterSign = {
@@ -10,8 +11,8 @@ export const FilterSign = {
 };
 
 export const SortDirection = {
-    '-': -1,
-    '+': 1
+    '-': 'DESC',
+    '+': 'ASC'
 };
 
 const REGEX_SEARCH_CLEANER = '/[^\\w\\s]/gi';
@@ -140,6 +141,24 @@ export class SearchCriteria {
     filters;
 
     search;
+
+    interceptQuery({ sorts, filters }) {
+        if (sorts && ArrayUtils.isPresent(sorts.allowFields)) {
+            const isNotAccepted = !this.sorts.some(item => sorts.allowFields.includes(item.sort));
+
+            if (isNotAccepted) {
+                throw new BadRequestException('Invalid sort field');
+            }
+        }
+
+        if (filters && ArrayUtils.isPresent(filters.allowFields)) {
+            const isNotAccepted = !this.filters.some(item => filters.allowFields.includes(item.column));
+
+            if (isNotAccepted) {
+                throw new BadRequestException('Invalid filter field');
+            }
+        }
+    }
 
     static create(query) {
         const instance = new SearchCriteria();
