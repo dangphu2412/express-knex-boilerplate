@@ -33,7 +33,7 @@ class UserServiceImpl {
                         .leftJoin('users_roles', 'users_roles.users_id', 'users.id')
                         .leftJoin('roles', 'users_roles.roles_id', 'roles.id')
                         .groupBy('users.id')
-                        .page(0, 2);
+                        .page(search.page, search.limit);
                 })
             .withGraphJoined('roles');
 

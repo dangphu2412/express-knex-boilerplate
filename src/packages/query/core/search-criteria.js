@@ -143,7 +143,7 @@ export class SearchCriteria {
     search;
 
     interceptQuery({ sorts, filters }) {
-        if (sorts && ArrayUtils.isPresent(sorts.allowFields)) {
+        if (sorts && ArrayUtils.isPresent(sorts.allowFields) && ArrayUtils.isPresent(this.sorts)) {
             const isNotAccepted = !this.sorts.some(item => sorts.allowFields.includes(item.sort));
 
             if (isNotAccepted) {
@@ -151,7 +151,7 @@ export class SearchCriteria {
             }
         }
 
-        if (filters && ArrayUtils.isPresent(filters.allowFields)) {
+        if (filters && ArrayUtils.isPresent(filters.allowFields) && ArrayUtils.isPresent(this.filters)) {
             const isNotAccepted = !this.filters.some(item => filters.allowFields.includes(item.column));
 
             if (isNotAccepted) {
@@ -169,7 +169,7 @@ export class SearchCriteria {
         assertReachMax(instance.limit, ConfigKeys.DEFAULT_LIMIT, () => new BadRequestException(`Can not set limit with this value: ${this.limit} because it reachs max value`));
 
         instance.page = parseInt(query.page, () => new BadRequestException('Page should be an number'))
-            || SearchConfig.get(ConfigKeys.DEFAULT_LIMIT);
+            || SearchConfig.get(ConfigKeys.DEFAULT_PAGE);
 
         assertReachMax(instance.limit, ConfigKeys.DEFAULT_PAGE, () => new BadRequestException(`Can not set page with this value: ${this.page} because it reachs max value`));
 
