@@ -166,12 +166,12 @@ export class SearchCriteria {
         instance.limit = parseInt(query.limit, () => new BadRequestException('Limit should be an number'))
             || SearchConfig.get(ConfigKeys.DEFAULT_LIMIT);
 
-        assertReachMax(instance.limit, ConfigKeys.DEFAULT_LIMIT, () => new BadRequestException(`Can not set limit with this value: ${this.limit} because it reachs max value`));
+        assertReachMax(instance.limit, ConfigKeys.MAX_LIMIT, () => new BadRequestException(`Can not set limit with this value: ${this.limit} because it reach max value`));
 
         instance.page = parseInt(query.page, () => new BadRequestException('Page should be an number'))
             || SearchConfig.get(ConfigKeys.DEFAULT_PAGE);
 
-        assertReachMax(instance.limit, ConfigKeys.DEFAULT_PAGE, () => new BadRequestException(`Can not set page with this value: ${this.page} because it reachs max value`));
+        assertReachMax(instance.page, ConfigKeys.MAX_PAGE, () => new BadRequestException(`Can not set page with this value: ${this.page} because it reach max value`));
 
         instance.filters = parseFilters(query.filters);
 
