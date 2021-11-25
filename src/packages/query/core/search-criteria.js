@@ -15,7 +15,7 @@ export const SortDirection = {
     '+': 'ASC'
 };
 
-const REGEX_SEARCH_CLEANER = '/[^\\w\\s]/gi';
+const REGEX_SEARCH_CLEANER = /\W+/g;
 
 /**
  *
@@ -117,16 +117,12 @@ function parseSorts(sorts) {
 }
 
 function parseSearch(search) {
-    const schema = {};
-
-    if (!search) return null;
-
-    schema.value = search.replace(
-        REGEX_SEARCH_CLEANER,
-        ''
-    );
-
-    return schema;
+    return !search
+        ? ''
+        : search.replace(
+            REGEX_SEARCH_CLEANER,
+            ''
+        );
 }
 
 export class SearchCriteria {
