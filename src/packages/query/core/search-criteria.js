@@ -17,10 +17,10 @@ export const SortDirection = {
 const REGEX_SEARCH_CLEANER = '/[^\\w\\s]/gi';
 
 /**
- * 
- * @param {any} value 
- * @param {() => Error} parseFailSupplier 
- * @returns 
+ *
+ * @param {any} value
+ * @param {() => Error} parseFailSupplier
+ * @returns
  */
 function parseInt(value, parseFailSupplier) {
     if (!value) {
@@ -42,8 +42,20 @@ function assertReachMax(value, maxKey, reachMaxSupplier) {
     }
 }
 
+function assertFilter(filter) {
+    if (filter.length !== 3) {
+        throw new BadRequestException('Filter format is not valid');
+    }
+
+    if (!FilterSign[filter[1]]) {
+        throw new BadRequestException('Sign in filter is not valid');
+    }
+}
+
 function toFilter(filter) {
     const parts = filter.split('|');
+
+    assertFilter(parts);
 
     return {
         column: parts[0],
