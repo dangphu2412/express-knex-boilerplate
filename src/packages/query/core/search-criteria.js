@@ -3,11 +3,10 @@ import { ArrayUtils } from 'packages/utils/array.util';
 import { ConfigKeys, SearchConfig } from './search-config';
 
 export const FilterSign = {
-    $eq: '$eq',
-    $gt: '$gt',
-    $lt: '$lt',
-    $in: '$in',
-    $s: '$regex'
+    $eq: '=',
+    $gt: '>',
+    $lt: '<',
+    $in: 'in'
 };
 
 export const SortDirection = {
